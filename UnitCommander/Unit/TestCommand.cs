@@ -1,6 +1,6 @@
 namespace Unit.UnitCommands
 {
-    public class StopUnitCommand : UnitCommand
+    public class TestCommand: UnitCommand
     {
         
     }

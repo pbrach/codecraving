@@ -5,9 +5,9 @@ namespace Unit.Units
 {
     public abstract class CoreUnit
     {
-        public UnitData UnitData { get; set; }
+        public abstract UnitData UnitData { get; set; }
 
-        public UnitCommand UnitCommand { get; set; }
+        public abstract UnitCommand UnitCommand { get; set; }
         
         public CoreUnit()
         {
@@ -17,28 +17,25 @@ namespace Unit.Units
 
         private void MainLoop()
         {
-            var innerState = new UnitState
-            {
-                CurrentData = UnitData.Clone(), 
-                CurrentCommand = UnitCommand.Clone()
-            };
+            var innerCurrentData = UnitData.Clone();
+            var innerCurrentCommand = UnitCommand.Clone();
             
             while (true)
             {
-                UnitData = innerState.CurrentData.Clone();
-                innerState.CurrentCommand = UnitCommand.Clone();
+                UnitData = innerCurrentData.Clone();
+                innerCurrentCommand = UnitCommand.Clone();
 
-                if (innerState.CurrentCommand is StopUnitCommand)
+                if (innerCurrentCommand is StopUnitCommand)
                 {
                     break;
                 }
                 
-                PerformCommand(innerState.CurrentCommand);
-                Thread.Sleep(300); // We hold this thread open infinitely anyways, thus sleep may be used here
+                PerformCommand(innerCurrentCommand);
+                Thread.Sleep(300); // We hold this thread open infinitely anyways,
+                                   // thus sleep may be used here: we do not intend to make this thread available for some other processing
             }
         }
 
-
-        protected abstract void PerformCommand(UnitCommand cmd);
+        protected abstract void PerformCommand<T>(T cmd) where T : UnitCommand;
     }
 }
