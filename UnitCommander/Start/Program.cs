@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using Unit;
 using Unit.UnitCommands;
 using Unit.Units;
 
@@ -11,17 +12,18 @@ namespace Start
         {
             Console.WriteLine("Hello World!");
             var adder = new NumberAdderUnit();
+            var unitInterface = new UnitInterface(adder);
 
-            var d = (double)9;
+            var d = (unitInterface.UnitData as AdderData).Number;
             Console.WriteLine($"Number is: {d}");
 
-            adder.UnitCommand = new AddCommand{ToBeAdded = 5};
+            unitInterface.UnitCommand = new AddCommand{ToBeAdded = 5};
             Thread.Sleep(800);
 
-            d = (adder.UnitData as AdderData).Number;
+            d = (unitInterface.UnitData as AdderData).Number;
             Console.WriteLine($"Number is: {d}");
             
-            adder.UnitCommand = new StopUnitCommand();
+            unitInterface.UnitCommand = new StopUnitCommand();
         }
     }
 }

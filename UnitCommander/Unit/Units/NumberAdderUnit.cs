@@ -10,10 +10,13 @@ namespace Unit.Units
         public double ToBeAdded { get; set; }
     }
 
+    
+    
+    
     public class NumberAdderUnit : CoreUnit
     {
         private readonly AdderData _adderData;
-        private AddCommand _adderCommand;
+        private UnitCommand _adderCommand;
 
         public NumberAdderUnit()
         {
@@ -30,27 +33,16 @@ namespace Unit.Units
         public override UnitCommand UnitCommand
         {
             get => _adderCommand;
-            set
-            {
-                if (value is AddCommand addCmd)
-                {
-                    _adderCommand = addCmd;
-                }
-            }
+            set => _adderCommand = value;
         }
 
-        protected override void PerformCommand<T>(T cmd)
+        protected override void PerformCommand(UnitCommand cmd)
         {
-            var addCmd = cmd as AddCommand;
-            if (addCmd != null)
+            if (cmd is AddCommand addCmd)
             {
-                ProcessAddCommand(addCmd);
+                _adderData.Number += addCmd.ToBeAdded;
             }
-        }
-
-        private void ProcessAddCommand(AddCommand addCmd)
-        {
-            _adderData.Number += addCmd.ToBeAdded;
+            
             _adderCommand = null;
         }
     }
