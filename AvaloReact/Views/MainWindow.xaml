@@ -1,0 +1,23 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:AvaloReact.ViewModels;assembly=AvaloReact"
+        Icon="resm:AvaloReact.Assets.avalonia-logo.ico"
+        Title="AvaloReact"
+        MinWidth="400" MinHeight="300">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    
+    <Grid Margin="30" ColumnDefinitions="*" RowDefinitions="*,*">
+        <TextBox Grid.Row="0" Grid.Column="1" Name="TextInput1" Text="Hello World!"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Name="TextInput2" Text="World Ahhh!"/>
+    </Grid>
+    <!-- <Panel> -->
+    <!-- -->
+    <!--     <Border Background="Red" CornerRadius="8"> -->
+    <!--         <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/> -->
+    <!--     </Border> -->
+    <!-- </Panel> -->
+</Window>
