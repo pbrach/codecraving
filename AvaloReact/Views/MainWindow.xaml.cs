@@ -1,8 +1,10 @@
+using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using AvaloReact.ViewModels;
 
 namespace AvaloReact.Views
 {
@@ -11,16 +13,18 @@ namespace AvaloReact.Views
         public MainWindow()
         {
             InitializeComponent();
-//            var btn = this.FindControl<Button>("MyButton");
-//            btn.AddHandler<PointerPressedEventArgs>(InputElement.PointerPressedEvent, OnPreviewKeyDown, RoutingStrategies.Tunnel);
-//            btn.GetObservable(Button.ContentProperty);
         }
 
-        private void OnPreviewKeyDown(object sender, PointerPressedEventArgs e)
+        protected override void OnDataContextChanged(EventArgs e)
         {
-            var btn = (Button)sender;
-            btn.Content = "New Text";
+            base.OnDataContextChanged(e);
+            var textObservable = InputText.GetObservable(TextBox.TextProperty);
+            var vm = (MainWindowViewModel)DataContext;
+            vm.AddInputObservable(textObservable);
         }
+
+        private TextBox InputText => this.FindControl<TextBox>("TextInput");
+
 
         private void InitializeComponent()
         {
