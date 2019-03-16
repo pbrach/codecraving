@@ -10,12 +10,7 @@ namespace AvaloReact.ViewModels
     {
         private string _output = "First Output line";
 
-        public IObservable<string> Input => Observable.Create<string>(observer =>
-        {
-            observer.OnNext("<type here your input>");
-            observer.OnCompleted();
-            return Disposable.Empty;
-        });
+        public string Input => "<type here your input>";
 
         public string Output
         {

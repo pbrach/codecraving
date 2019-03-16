@@ -11,7 +11,7 @@
 
     
     <Grid Margin="30" ColumnDefinitions="*" RowDefinitions="Auto,*">
-        <TextBox Grid.Row="0" Grid.Column="1" Name="TextInput" Text="{Binding Input^, Mode=TwoWay}"/>
+        <TextBox Grid.Row="0" Grid.Column="1" Name="TextInput" Text="{Binding Input, Mode=TwoWay}"/>
         <TextBox Grid.Row="1" Grid.Column="1" Name="TextOutput"  Text="{Binding Output, Mode=TwoWay}"
                  AcceptsReturn="True"/>
     </Grid>
