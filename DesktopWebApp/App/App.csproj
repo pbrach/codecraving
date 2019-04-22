@@ -9,4 +9,17 @@
       <ProjectReference Include="..\Webview\Webview.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <EmbeddedResource Include="View\Html\Main.html" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="View\Css" />
+      <Folder Include="View\Js" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="HtmlAgilityPack" Version="1.10.2" />
+    </ItemGroup>
+
 </Project>

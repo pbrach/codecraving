@@ -1,36 +1,22 @@
 ﻿using System;
 using System.Drawing;
-
+using App.Intercom;
+using App.View;
 using Webview;
 
-namespace DesktopWebApp
+namespace App
 {
     class Program
     {
 
         static void Main(string[] args)
         {
-            const string html = 
-@"
-<html>
-<body>
-    <h1>Eval</h1>
-    <div id='content'></div>
+            var html = ResourceKeeper.Html("Main.html");
+            Callbacks.AddCallback(nameof(DisplayName), DisplayName);
 
-    <input type='text' id='nameInput' placeholder='enter name'/>
-    <button onclick='MyButtonClick()'>Do it!</button>
-    <p id='display'></p>
-
-    <script>
-        function MyButtonClick() {
-            window.external.invoke('click:'+document.getElementById('nameInput').value);
-        }
-    </script>
-</body>
-</html>";
             var webview = new WebviewBuilder("Eval", Content.FromHtml(html))
                 .WithSize(new Size(1024, 768))
-                .WithInvokeCallback(CallbackHandler)
+                .WithInvokeCallback(Callbacks.Handler)
                 .Debug()
                 .Build();
 
@@ -47,13 +33,9 @@ namespace DesktopWebApp
             }
         }
 
-        private static void CallbackHandler(Webview.Webview webview, string args)
+        private static void DisplayName(Webview.Webview webview, string name)
         {
-            if (args.StartsWith("click"))
-            {
-                var name = args.Split(":")[1];
-                webview.Eval($@"document.getElementById('display').textContent = 'Hello {name}'");
-            }
+            webview.Eval($@"document.getElementById('display').textContent = 'Hello {name}'");
         }
     }
 }
