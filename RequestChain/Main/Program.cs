@@ -41,9 +41,8 @@ namespace Main
         private static IMediator BuildMediator()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterType<Shelf>().SingleInstance().As<Shelf>();
-            builder.RegisterType<PushIntoShelfCommand>();
-            builder.RegisterType<PushIntoShelfHandler>().SingleInstance().As<IRequestHandler<PushIntoShelfCommand, Shelf>>();
+            builder.Register(_ => new Shelf(3)).SingleInstance().As<Shelf>();
+            builder.RegisterType<PushIntoShelfHandler>().As<IRequestHandler<PushIntoShelfCommand, Shelf>>();
 
             builder.RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly).AsImplementedInterfaces();
 

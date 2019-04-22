@@ -7,8 +7,6 @@ namespace Main.ShelfDomain
     {
         private List<Package> Compartments { get;}
 
-        public Shelf(): this(3){}
-        
         public Shelf(int numberOfCompartments)
         {
             Compartments = Enumerable.Range(0, numberOfCompartments).Select<int, Package>(_ => null).ToList();
