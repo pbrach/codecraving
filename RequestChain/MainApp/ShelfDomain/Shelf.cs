@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Main.ShelfDomain
+namespace MainApp.ShelfDomain
 {
     public class Shelf
     {

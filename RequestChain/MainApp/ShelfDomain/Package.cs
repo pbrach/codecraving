@@ -1,4 +1,4 @@
-namespace Main.ShelfDomain
+namespace MainApp.ShelfDomain
 {
     public class Package
     {
