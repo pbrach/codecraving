@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Autofac;
 using Components;
-using Components.Implementation;
 using Components.Interface;
 using IContainer = Autofac.IContainer;
 
@@ -14,8 +13,9 @@ namespace AutofacLearning
         {
             var container = InitContainer();
             var skills = container.Resolve < IEnumerable<ISkillType>>();
-            var user1 = container.Resolve<ISimpleExample>(
-                new TypedParameter(typeof(string), "sectionName")
+            var groups = container.Resolve < IEnumerable<ISkillGroup>>();
+            var user1 = container.Resolve<IUser>(
+                new TypedParameter(typeof(string), "User1")
 //                new NamedParameter("skills", new List<IUserSkill>()),
 //                new NamedParameter("friends", new List<IUser>())
                 );

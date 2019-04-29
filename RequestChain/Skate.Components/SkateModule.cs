@@ -1,13 +1,12 @@
 using System.Reflection;
 using Autofac;
 using Components.Implementation;
-using Components.Implementation.SkillTypes;
 using Components.Interface;
 using Module = Autofac.Module;
 
 namespace Components
 {
-    public class SkateModule: Module
+    public class SkateModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
@@ -20,9 +19,10 @@ namespace Components
 //            builder.RegisterType<HeelBrakeSkill>().As<ISkillType>();
 //            builder.RegisterType<LeftTurnForwardCrossoverSkill>().As<ISkillType>();
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(x => x.IsInNamespace(typeof(DragStopSkill).Namespace))
+                .Where(x => 
+                    x.IsAssignableTo<ISkillType>() || 
+                    x.IsAssignableTo<ISkillGroup>())
                 .AsImplementedInterfaces();
         }
-        
     }
 }
