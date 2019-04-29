@@ -4,20 +4,19 @@ using Autofac;
 using Components;
 using Components.Interface;
 using IContainer = Autofac.IContainer;
+// ReSharper disable ClassNeverInstantiated.Global
 
 namespace AutofacLearning
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
             var container = InitContainer();
             var skills = container.Resolve < IEnumerable<ISkillType>>();
             var groups = container.Resolve < IEnumerable<ISkillGroup>>();
             var user1 = container.Resolve<IUser>(
                 new TypedParameter(typeof(string), "User1")
-//                new NamedParameter("skills", new List<IUserSkill>()),
-//                new NamedParameter("friends", new List<IUser>())
                 );
             
             Console.WriteLine(user1.Name);
