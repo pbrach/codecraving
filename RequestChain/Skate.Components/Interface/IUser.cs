@@ -9,5 +9,7 @@ namespace Components.Interface
         IEnumerable<IUser> Friends { get; }
 
         void LearnSkill(ISkillType skillType);
+
+        void AddFriend(IUser friend);
     }
 }
