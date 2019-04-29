@@ -12,12 +12,8 @@ namespace Components
         {
             builder.RegisterType<UserSkill>().As<IUserSkill>();
             builder.RegisterType<User>().UsingConstructor(typeof(string)).As<IUser>();
-            builder.RegisterType<SimpleExample>().As<ISimpleExample>();
 
 
-//            builder.RegisterType<BackwardStrideSkill>().As<ISkillType>();
-//            builder.RegisterType<HeelBrakeSkill>().As<ISkillType>();
-//            builder.RegisterType<LeftTurnForwardCrossoverSkill>().As<ISkillType>();
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
                 .Where(x => 
                     x.IsAssignableTo<ISkillType>() || 
