@@ -10,7 +10,8 @@ namespace Components.Implementation
         {
             foreach (var friend in friends)
             {
-                Console.WriteLine($"Notified {friend} of {skillLearned.LearnerName}'s new skill");
+                Console.WriteLine($"Notified {friend.Name} of {skillLearned.LearnerName}'s new skill " +
+                                  $"'{skillLearned.NewSkillType.Name}' with message: '{skillLearned.Message}'");
             }
         }
     }

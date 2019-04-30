@@ -28,15 +28,20 @@ namespace Components.Implementation
         public void LearnSkill(ISkillType skillType)
         {
             var existingSkill = TryGetExistingSkill(skillType);
-
+            UserSkill incrementedSkill = null;
             if (existingSkill != null)
             {
                 existingSkill.Increment();
+                incrementedSkill = existingSkill;
             }
             else
             {
-                _skills.Add(new UserSkill(skillType));
+                incrementedSkill = new UserSkill(skillType);
+                _skills.Add(incrementedSkill);
             }
+
+            var levelName = incrementedSkill.Level.ToString();
+            _notifier.NotifyFriends(_friends, new NewSkillLearned(Name, skillType, "Now at level: " + levelName));
         }
 
         private UserSkill TryGetExistingSkill(ISkillType skillType)
