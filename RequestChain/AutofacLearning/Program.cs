@@ -16,12 +16,7 @@ namespace AutofacLearning
         {
             var container = InitContainer();
 
-            //Lame Test:
-            var user1 = container.Resolve<IUser>(
-                new TypedParameter(typeof(string), "User1")
-            );
-
-            Console.WriteLine(user1.Name);
+            LameResolveParameterExample(container);
 
             // The actual injection
             using (var scope = container.BeginLifetimeScope())
@@ -30,6 +25,7 @@ namespace AutofacLearning
                 innerClass.Run();
             }
         }
+
 
         private static IContainer InitContainer()
         {
@@ -40,6 +36,17 @@ namespace AutofacLearning
 
             return container;
         }
+        
+        
+        private static void LameResolveParameterExample(IContainer container)
+        {
+            var user1 = container.Resolve<IUser>(
+                new TypedParameter(typeof(string), "User1")
+            );
+
+            Console.WriteLine(user1.Name);
+        }
+        
 
         private class InnerClass
         {
@@ -58,28 +65,50 @@ namespace AutofacLearning
             public void Run()
             {
                 {
-                    var user1 = _userFac("user1");
-                    var user2 = _userFac("user2");
-                    var user3 = _userFac("user3");
+                    var user1 = CreateUser();
+                    PrintFriendNames(user1);
 
-                    user1.AddFriend(user2);
-                    user1.AddFriend(user3);
+                    PrintSkillGroups(_skillGroups);
 
-                    var friendNames = user1.Friends.Select(x => x.Name);
-                    Console.WriteLine($"\n{user1.Name} has friends: {string.Join(", ", friendNames)}");
-
-                    var skillGroupNames = _skillGroups.Select(x => "\n\t- "+x.GetType().Name);
-                    Console.WriteLine($"\nthese groups where injected: {string.Join("", skillGroupNames)}");
-                    foreach (var skillGroup in _skillGroups)
-                    {
-                        Console.WriteLine("\nGroup " + skillGroup.GetType().Name + " has skills:");
-                        Console.WriteLine(string.Join("\n", skillGroup.Skills.Select(s => "\t\t" + s.Name)));
-                    }
-
-                    var skillNames = _skillTypes.Select(x => "\n\t- " + x.Name);
-                    Console.WriteLine($"\n\nthese skills where injected: {string.Join("", skillNames)}");
+                    PrintSkillTypes(_skillTypes);
                 }
             }
+
+            private IUser CreateUser()
+            {
+                var user1 = _userFac("user1");
+                var user2 = _userFac("user2");
+                var user3 = _userFac("user3");
+
+                user1.AddFriend(user2);
+                user1.AddFriend(user3);
+
+                return user1;
+            }
+
+            private static void PrintSkillGroups(IEnumerable<ISkillGroup> skillGroups)
+            {
+                var skillGroupNames = skillGroups.Select(x => "\n\t- " + x.GetType().Name);
+                Console.WriteLine($"\nthese groups where injected: {string.Join("", skillGroupNames)}");
+                
+                foreach (var skillGroup in skillGroups)
+                {
+                    Console.WriteLine("\nGroup " + skillGroup.GetType().Name + " has skills:");
+                    Console.WriteLine(string.Join("\n", skillGroup.Skills.Select(s => "\t\t- " + s.Name)));
+                }
+            }
+            
+            private static void PrintSkillTypes(IEnumerable<ISkillType> skillTypes)
+            {
+                var skillNames = skillTypes.Select(x => "\n\t- " + x.Name);
+                Console.WriteLine($"\n\nthese skills where injected: {string.Join("", skillNames)}");
+            }
+
+            private static void PrintFriendNames(IUser user1)
+            {
+                var friendNames = user1.Friends.Select(x => x.Name);
+                Console.WriteLine($"\n{user1.Name} has friends: {string.Join(", ", friendNames)}");
+            }            
         }
     }
 }

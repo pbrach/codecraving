@@ -11,7 +11,8 @@ namespace Components
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<UserSkill>().As<IUserSkill>();
-            builder.RegisterType<User>().UsingConstructor(typeof(string)).As<IUser>();
+            builder.RegisterType<User>().As<IUser>();
+            builder.RegisterType<Notifier>().SingleInstance().AsImplementedInterfaces();
 
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())

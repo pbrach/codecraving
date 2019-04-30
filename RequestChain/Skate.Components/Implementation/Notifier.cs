@@ -4,7 +4,7 @@ using Components.Interface;
 
 namespace Components.Implementation
 {
-    internal class Messenger: IMessenger
+    internal class Notifier: INotifier
     {
         public void NotifyFriends(IEnumerable<IUser> friends, INewSkillLearned skillLearned)
         {

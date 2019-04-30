@@ -5,11 +5,12 @@ namespace Components.Implementation
 {
     public class User : IUser
     {
+        private readonly INotifier _notifier;
         private readonly IList<IUser> _friends;
 
-        public User(string name)
+        public User(INotifier notifier, string name = "Unknown")
         {
-            Name = "Unknown";
+            _notifier = notifier;
             Skills = new List<IUserSkill>();
             _friends = new List<IUser>();
             Name = name;
