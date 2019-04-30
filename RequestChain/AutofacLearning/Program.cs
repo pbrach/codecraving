@@ -71,7 +71,21 @@ namespace AutofacLearning
                     PrintSkillGroups(_skillGroups);
 
                     PrintSkillTypes(_skillTypes);
+
+                    LearnSkills(user1);
                 }
+            }
+
+            private void LearnSkills(IUser user1)
+            {
+                var backwardStrideSkill = _skillTypes.First(type => type.Name == "Backward stride");
+                user1.LearnSkill(backwardStrideSkill);
+                user1.LearnSkill(backwardStrideSkill);
+                user1.LearnSkill(backwardStrideSkill);
+                user1.LearnSkill(backwardStrideSkill);
+                
+                // Higher than professional: NOT POSSIBLE!
+                user1.LearnSkill(backwardStrideSkill);
             }
 
             private IUser CreateUser()
