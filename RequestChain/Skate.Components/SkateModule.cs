@@ -15,9 +15,10 @@ namespace Components
 
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(x => 
-                    x.IsAssignableTo<ISkillType>() || 
+                .Where(x =>
+                    x.IsAssignableTo<ISkillType>()     ||
                     x.IsAssignableTo<ISkillGroup>())
+                .SingleInstance()
                 .AsImplementedInterfaces();
         }
     }

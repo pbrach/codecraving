@@ -15,7 +15,7 @@ namespace AutofacLearning
         private static void Main()
         {
             var container = InitContainer();
-            
+
             //Lame Test:
             var user1 = container.Resolve<IUser>(
                 new TypedParameter(typeof(string), "User1")
@@ -24,8 +24,11 @@ namespace AutofacLearning
             Console.WriteLine(user1.Name);
 
             // The actual injection
-            var innerClass = container.Resolve<InnerClass>();
-            innerClass.Run();
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var innerClass = scope.Resolve<InnerClass>();
+                innerClass.Run();
+            }
         }
 
         private static IContainer InitContainer()
@@ -44,7 +47,8 @@ namespace AutofacLearning
             private readonly IEnumerable<ISkillType> _skillTypes;
             private readonly IEnumerable<ISkillGroup> _skillGroups;
 
-            public InnerClass(Func<string, IUser> userFac, IEnumerable<ISkillType> skillTypes, IEnumerable<ISkillGroup> skillGroups)
+            public InnerClass(Func<string, IUser> userFac, IEnumerable<ISkillType> skillTypes,
+                IEnumerable<ISkillGroup> skillGroups)
             {
                 _userFac = userFac;
                 _skillTypes = skillTypes;
@@ -62,13 +66,18 @@ namespace AutofacLearning
                     user1.AddFriend(user3);
 
                     var friendNames = user1.Friends.Select(x => x.Name);
-                    Console.WriteLine($"{user1.Name} has friends: {string.Join(", ", friendNames)}");
+                    Console.WriteLine($"\n{user1.Name} has friends: {string.Join(", ", friendNames)}");
 
-                    var skillGroupNames = _skillGroups.Select(x => x.GetType().Name);
-                    Console.WriteLine($"these groups where injected: {string.Join(", ", skillGroupNames)}");
+                    var skillGroupNames = _skillGroups.Select(x => "\n\t- "+x.GetType().Name);
+                    Console.WriteLine($"\nthese groups where injected: {string.Join("", skillGroupNames)}");
+                    foreach (var skillGroup in _skillGroups)
+                    {
+                        Console.WriteLine("\nGroup " + skillGroup.GetType().Name + " has skills:");
+                        Console.WriteLine(string.Join("\n", skillGroup.Skills.Select(s => "\t\t" + s.Name)));
+                    }
 
-                    var skillNames = _skillTypes.Select(x => x.Name);
-                    Console.WriteLine($"these skills where injected: {string.Join(", ", skillNames)}");
+                    var skillNames = _skillTypes.Select(x => "\n\t- " + x.Name);
+                    Console.WriteLine($"\n\nthese skills where injected: {string.Join("", skillNames)}");
                 }
             }
         }
