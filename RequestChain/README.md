@@ -1,9 +1,9 @@
-# Train and Test: Dependency Injection and Request 
+# Train and Test: Dependency Injection and Request Pipelines
 
 I used here `MediatR` and `autofac`. The examples are pretty contrived stuff, 
 it's mostly only about using/applying the two libs.
 
-MediatR can be used with any ID/IoC framework. Because I wanted to try it 
+MediatR can be used with any DI/IoC framework. Because I wanted to try it 
 (never used it yet in any project), I test autofac here. Interesting in
 MediatR are the possibilities to add behavior to the request pipeline.
 
@@ -23,4 +23,4 @@ only.
 
 Still: This architecture pattern probably has limitations and needs a lot of
 setup (which makes tools like mediatR helpful). Thought this is probably true,
-I am not yet sure what the weaknesses are.
+I am not yet sure what the weaknesses (of the pattern not mediatR) are.

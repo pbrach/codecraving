@@ -29,8 +29,8 @@ namespace MainApp
                 Compartment = 0
             };
 
-            await mediator.Send(pushCmd, CancellationToken.None); 
-            var shelf = await mediator.Send(new GetShelfStatusCommand(), CancellationToken.None); 
+            await mediator.Send(pushCmd, CancellationToken.None); // command 
+            var shelf = await mediator.Send(new GetShelfStatusCommand(), CancellationToken.None); // query 
             Console.WriteLine(shelf.ToString());
             
             pushCmd = new PushIntoShelfCommand
@@ -38,8 +38,8 @@ namespace MainApp
                 Package = new Package("Carrots"),
                 Compartment = 0
             };
-            await mediator.Send(pushCmd, CancellationToken.None);  
-            shelf = await mediator.Send(new GetShelfStatusCommand(), CancellationToken.None); 
+            await mediator.Send(pushCmd, CancellationToken.None);  // command
+            shelf = await mediator.Send(new GetShelfStatusCommand(), CancellationToken.None); // query 
             Console.WriteLine(shelf.ToString());
         }
 
