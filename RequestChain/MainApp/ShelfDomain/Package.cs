@@ -13,5 +13,9 @@ namespace MainApp.ShelfDomain
             Name = name;
             Id = ++_numberOfPackages;
         }
+
+        public static Package Null { get; } = new Package("nothing");
     }
+
+
 }

@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
@@ -22,14 +23,18 @@ namespace MainApp
                 Compartment = 0
             };
 
-            var shelf = await mediator.Send(pushCmd, CancellationToken.None);   
+            await mediator.Send(pushCmd, CancellationToken.None); 
+            var shelf = await mediator.Send(new GetShelfStatusCommand(), CancellationToken.None); 
+            Console.WriteLine(shelf.ToString());
             
             pushCmd = new PushIntoShelfCommand
             {
                 Package = new Package("Carrots"),
                 Compartment = 0
             };
-            shelf = await mediator.Send(pushCmd, CancellationToken.None);  
+            await mediator.Send(pushCmd, CancellationToken.None);  
+            shelf = await mediator.Send(new GetShelfStatusCommand(), CancellationToken.None); 
+            Console.WriteLine(shelf.ToString());
         }
 
 
@@ -37,8 +42,9 @@ namespace MainApp
         {
             var builder = new ContainerBuilder();
             builder.Register(_ => new Shelf(3)).SingleInstance().As<Shelf>();
-            builder.RegisterType<PushIntoShelfHandler>().As<IRequestHandler<PushIntoShelfCommand, Shelf>>();
-
+            builder.RegisterType<PushIntoShelfHandler>().As<IRequestHandler<PushIntoShelfCommand, Unit>>();
+            builder.RegisterType<GetShelfStatusHandler>().As<IRequestHandler<GetShelfStatusCommand, Shelf>>();
+            
             builder.RegisterAssemblyTypes(Assembly.Load(nameof(MainApp))).Where(type => type.IsInNamespace(nameof(Requests))).AsImplementedInterfaces();
             builder.RegisterAssemblyTypes(Assembly.Load(nameof(MediatR))).AsImplementedInterfaces();
             
